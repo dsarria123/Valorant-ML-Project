@@ -1,0 +1,9 @@
+1. 
+
+Until I figure out how to get consistent player Ids, 
+I will request that the user goes to vlr.gg, searches up the player, and tell me the id. 
+This ID gives us instant access to their link.
+
+2.
+
+Follow the steps
