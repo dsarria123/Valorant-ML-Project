@@ -76,7 +76,7 @@ def scrape_player_data(player_id):
     wait = WebDriverWait(driver, 10)
     match_map_data = []
     page_number = 1
-
+    
     while True:
         url = f'https://www.vlr.gg/player/matches/{player_id}/?page={page_number}'
         driver.get(url)
