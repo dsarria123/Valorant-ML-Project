@@ -119,7 +119,10 @@ driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), opti
 urls = [
     'https://www.vlr.gg/294973/team-ludwig-vs-team-tarik-ludwig-x-tarik-invitational-2-match',
     'https://www.vlr.gg/25200/xset-vs-sentinels-champions-tour-north-america-stage-3-challengers-1-gf',
-    'https://www.vlr.gg/286660/sentinels-vs-paper-rex-afreecatv-valorant-league-gf/?game=149811&tab=overview'
+    'https://www.vlr.gg/286660/sentinels-vs-paper-rex-afreecatv-valorant-league-gf/?game=149811&tab=overview',
+    'https://www.vlr.gg/286658/sentinels-vs-team-liquid-afreecatv-valorant-league-sf',
+    'https://www.vlr.gg/286644/sentinels-vs-drx-afreecatv-valorant-league-winners-a',
+    'https://www.vlr.gg/286642/sentinels-vs-paper-rex-afreecatv-valorant-league-opening-a'
 ]
 
 # Define the player name you're looking for
