@@ -8,7 +8,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import pandas as pd
 import time
-from getPlayerName import get_playername
+from get_methods.getPlayerName import get_playername
 from TableScraper import scrape_data
 
 pd.set_option('display.max_rows', 100)
