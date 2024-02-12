@@ -7,7 +7,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import pandas as pd
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
-
+'''
+Run it to see output in terminal
 player_id = 9
 page_number = 1
 
@@ -18,7 +19,7 @@ driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), opti
 
 
 
-url = f'https://www.vlr.gg/player/matches/{3265}/?page={page_number}'
+url = f'https://www.vlr.gg/player/matches/{3265}/'
 
 driver.get(url)
 
@@ -27,3 +28,12 @@ player_name_element = driver.find_element(By.XPATH, '//*[@id="wrapper"]/div[1]/d
 player_name = player_name_element.text.strip() if player_name_element else "Unknown Player"
 
 print(player_name)
+'''
+
+def get_playername(player_id, driver):
+    url = f'https://www.vlr.gg/player/matches/{player_id}/'
+    driver.get(url)
+    player_name_element = driver.find_element(By.XPATH, '//*[@id="wrapper"]/div[1]/div/div[1]/div[1]/div[2]/div[1]/h1')
+    player_name = player_name_element.text.strip() if player_name_element else "Unknown Player"
+
+    return player_name

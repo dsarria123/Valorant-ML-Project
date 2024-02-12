@@ -9,7 +9,7 @@ That expected value is returned to app.py to get returned to the user
 
 '''
 
-from scraper import scrape_player_data
+from MatchScraper import scrape_player_data
 from data_processor import processdata
 from model_builder import buildModel
 
