@@ -8,16 +8,6 @@ from selenium.webdriver.support import expected_conditions as EC
 import pandas as pd
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-import pandas as pd
-from selenium.common.exceptions import TimeoutException, NoSuchElementException
-
 def scrape_data(driver, player_name, url):
     driver.get(url)
     wait = WebDriverWait(driver, 10)

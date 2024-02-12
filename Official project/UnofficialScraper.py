@@ -70,7 +70,7 @@ pd.set_option('display.max_rows', 100)
 
 def scrape_player_data(player_id):
     chrome_options = Options()
-    chrome_options.add_argument("--headless")  # Uncomment for headless mode
+    #chrome_options.add_argument("--headless")  # Uncomment for headless mode
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 
     wait = WebDriverWait(driver, 10)

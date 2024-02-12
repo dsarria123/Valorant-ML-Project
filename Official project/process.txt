@@ -6,4 +6,4 @@ This ID gives us instant access to their link.
 
 2.
 
-Follow the steps
+Scraping data, going through 

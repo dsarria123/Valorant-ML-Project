@@ -18,7 +18,7 @@ from selenium.webdriver.chrome.options import Options
 from time import sleep
 
 #Scrapes data and creates a df based off the user input
-def scrape_player_data(player_id, opposing_team):
+def scrape_player_data(player_id):
 
     # Set up the Chrome options
     chrome_options = Options()
@@ -48,6 +48,6 @@ def scrape_player_data(player_id, opposing_team):
 
 
 
-    return f"Received in scraper - Player ID: {player_id}, Opposing Team: {opposing_team}"
+    return
 
 
