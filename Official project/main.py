@@ -19,7 +19,7 @@ def runModel(player_id, opposing_team):
     #STEP 3 DATA GETS SENT TO SCRAPE
     scrapeddata = scrape_player_data(player_id)
     #STEP 4 SCRAPED DATA GETS SEND TO CLEAN, AND MADE INTO A NEW DATASET INCLUDING NEW FEATURES, ETC.
-    'gooddata = processdata(scrapeddata)'
+    gooddata = processdata(scrapeddata)
     #STEP 5 GOOD DATA GETS SENT TO RUN THROUGH THE MODEL
     'expectedValue = buildModel(gooddata)'
 

@@ -1,9 +1,16 @@
 '''
 Processes the raw data obtained from the scraper.
-This can include cleaning the data, transforming it into a suitable format for analysis, and potentially saving it to a file (like CSV) for later use.
-Feature engineering can also be part of this module.
+This includes cleaning the data, transforming it into a suitable format for analysis, and potentially saving it to a file (like CSV) for later use.
+Feature engineering will also occur in this module
+
+Goals:
+Get rid of any NA data
 '''
 
 
+
 def processdata(scrapeddata):
+
+    
+
     return

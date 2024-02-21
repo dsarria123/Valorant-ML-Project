@@ -78,6 +78,10 @@ def scrape_data(driver, player_name, url):
                 'Player': player_name  
                 }
 
+                agent_img = player_row.find_element(By.CSS_SELECTOR, 'td.mod-agents img')
+                agent_name = agent_img.get_attribute('alt').strip()
+
+
                 stats_data = player_row.find_elements(By.CSS_SELECTOR, 'td.mod-stat')
                 if len(stats_data) >= 7:
                     stats['ACS'] = stats_data[1].text.strip()
@@ -86,7 +90,7 @@ def scrape_data(driver, player_name, url):
                     stats['Assists'] = stats_data[4].text.strip()
                     stats['KAST'] = stats_data[6].text.strip()
                     stats['ADR'] = stats_data[7].text.strip()
-
+                    stats['Agent Played'] = agent_name
                 player_stats.append(stats)
                 print(f"Stats collected for {player_name} on map: {map_name}")
 
