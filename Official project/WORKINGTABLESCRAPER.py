@@ -16,6 +16,36 @@ from selenium.webdriver.support import expected_conditions as EC
 import pandas as pd
 import time
 
+def match_team(abbreviation, team_names):
+    abbreviation = abbreviation.lower().replace(' ', '')
+    best_match = team_names[0]  # Initialize to the first team name by default
+    best_score = -float('inf')  # Initialize to negative infinity
+    
+    for team in team_names:
+        clean_team_name = team.lower().replace(' ', '')
+        score = 0
+        j = 0
+        
+        # Check if each character in the abbreviation appears in sequence in the team name
+        for char in abbreviation:
+            if char in clean_team_name[j:]:
+                j = clean_team_name.index(char, j) + 1
+                score += 1
+            else:
+                score -= 1
+        
+        # Update the best match if this score is higher than the previous best
+        if score > best_score:
+            best_match = team
+            best_score = score
+        elif score == best_score and len(team) < len(best_match):
+            best_match = team
+    
+    return best_match
+
+
+
+
 def scrape_data(driver, player_name, url):
     driver.get(url)
     print(f"Accessing URL: {url}")
@@ -69,7 +99,18 @@ def scrape_data(driver, player_name, url):
             try:
                 player_row = stats_section.find_element(By.XPATH, player_selector)
 
+
+                # Find the abbreviation element within the player's row
+                team_abbr_element = player_row.find_element(By.CSS_SELECTOR, 'div.ge-text-light')
+                player_team_abbr = team_abbr_element.text.strip()
+
+                # In your main scrape_data function:
+                player_team = match_team(player_team_abbr, [first_team_name, second_team_name])
+                opposite_team = first_team_name if player_team == second_team_name else second_team_name
+
                 stats = {
+                'Player team': player_team,
+                'Opposite team': opposite_team,
                 'Winning team': winning_team,
                 'Winning team score': first_team_score if first_team_score > second_team_score else second_team_score,
                 'Losing team': losing_team,
@@ -77,10 +118,6 @@ def scrape_data(driver, player_name, url):
                 'Map': map_name,  
                 'Player': player_name  
                 }
-
-                agent_img = player_row.find_element(By.CSS_SELECTOR, 'td.mod-agents img')
-                agent_name = agent_img.get_attribute('alt').strip()
-
 
                 stats_data = player_row.find_elements(By.CSS_SELECTOR, 'td.mod-stat')
                 if len(stats_data) >= 7:
@@ -90,7 +127,7 @@ def scrape_data(driver, player_name, url):
                     stats['Assists'] = stats_data[4].text.strip()
                     stats['KAST'] = stats_data[6].text.strip()
                     stats['ADR'] = stats_data[7].text.strip()
-                    stats['Agent Played'] = agent_name
+
                 player_stats.append(stats)
                 print(f"Stats collected for {player_name} on map: {map_name}")
 
@@ -121,7 +158,8 @@ urls = [
     'https://www.vlr.gg/294973/team-ludwig-vs-team-tarik-ludwig-x-tarik-invitational-2-match',
     'https://www.vlr.gg/25200/xset-vs-sentinels-champions-tour-north-america-stage-3-challengers-1-gf',
     'https://www.vlr.gg/286660/sentinels-vs-paper-rex-afreecatv-valorant-league-gf/?game=149811&tab=overview',
-    'https://www.vlr.gg/7719/cloud9-blue-vs-t1-cloud9-to-the-skyes-invitational-quarterfinals'
+    'https://www.vlr.gg/7719/cloud9-blue-vs-t1-cloud9-to-the-skyes-invitational-quarterfinals',
+    'https://www.vlr.gg/6432/spacestation-gaming-vs-cloud9-blue-first-strike-north-america-umg-closed-qual-decider-a'
 ]
 
 # Define the player name you're looking for
