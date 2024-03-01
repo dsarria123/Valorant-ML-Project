@@ -99,6 +99,10 @@ def scrape_data(driver, player_name, url):
             try:
                 player_row = stats_section.find_element(By.XPATH, player_selector)
 
+                
+                # Find the agent's image element within the player's row
+                agent_img_element = player_row.find_element(By.CSS_SELECTOR, 'td.mod-agents img')
+                agent_name = agent_img_element.get_attribute('alt').strip()  # Extract the agent's name from the alt attribute
 
                 # Find the abbreviation element within the player's row
                 team_abbr_element = player_row.find_element(By.CSS_SELECTOR, 'div.ge-text-light')
@@ -109,6 +113,7 @@ def scrape_data(driver, player_name, url):
                 opposite_team = first_team_name if player_team == second_team_name else second_team_name
 
                 stats = {
+                'Agent': agent_name,
                 'Player team': player_team,
                 'Opposite team': opposite_team,
                 'Winning team': winning_team,

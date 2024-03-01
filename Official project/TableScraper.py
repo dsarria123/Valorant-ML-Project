@@ -65,20 +65,25 @@ def scrape_data(driver, player_name, url):
                 team_abbr_element = player_row.find_element(By.CSS_SELECTOR, 'div.ge-text-light')
                 player_team_abbr = team_abbr_element.text.strip()
 
+                # Find the agent's image element within the player's row
+                agent_img_element = player_row.find_element(By.CSS_SELECTOR, 'td.mod-agents img')
+                agent_name = agent_img_element.get_attribute('alt').strip()  # Extract the agent's name from the alt attribute
+
                 # In your main scrape_data function:
                 player_team = match_team(player_team_abbr, [first_team_name, second_team_name])
                 opposite_team = first_team_name if player_team == second_team_name else second_team_name
 
                 # Extracting specific data
                 stats = {
+                'Agent' : agent_name,
                 'Player team': player_team,
                 'Opposite team': opposite_team,
                 'Winning team': winning_team,
                 'Winning team score': first_team_score if first_team_score > second_team_score else second_team_score,
                 'Losing team': losing_team,
                 'Losing team score': second_team_score if first_team_score > second_team_score else first_team_score,
-                'Map': map_name,  # This should be set from your current loop iterating over maps
-                'Player': player_name  # Set this to the player's name you are currently processing
+                'Map': map_name, 
+                'Player': player_name  
                 }
      
 

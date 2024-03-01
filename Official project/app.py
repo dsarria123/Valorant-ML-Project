@@ -1,7 +1,6 @@
 from flask import Flask, request, render_template
 from MatchScraper import scrape_player_data
-from data_processor import processdata  # Assuming this function exists
-from model_builder import buildModel  # Assuming this function exists
+from model_builder import buildModel 
 import pandas as pd
 
 app = Flask(__name__)
@@ -20,27 +19,38 @@ def submit():
         # Step 2: Scrape player data
         scrapedData = scrape_player_data(player_id)
 
-        # Step 3: Filter data for specific opposing team
+      
         specificData = scrapedData[scrapedData['Opposite team'] == opposing_team]
 
-        # Step 4: Get statistics that I want to display other than building the model(DATA_PROCESSOR.PY)
-        webstats =   
-
-        # Step 5: Build model and get predicted kill #
-        prediction =  # Assuming this returns a prediction
-
-        # Step 6: Return results 
         
+        # Filter data for the specific opposing team
+        specificData = scrapedData[scrapedData['Opposite team'] == opposing_team]
+        
+        # Calculate average stats against the opposing team
+        avg_acs = specificData['ACS'].mean()
+        avg_kills = specificData['Kills'].mean()
+        # TODO: Determine the agent he will most likely play: Do this by looking at what agents he usually plays versus this team?
+        agentPrediction = 
+
+        # Step 3: Prepare data and build model
+        prediction = buildModel(scrapedData, agentPrediction)  # This will be defined next
+
+        # Step 4: Prepare stats for display
+        stats = {
+            'agentPrediction': agentPrediction,
+            'recent_matches': specificData.tail(5).to_dict('records'),  # Last 5 matches
+            'avg_acs': avg_acs,
+            'avg_kills': avg_kills,
+            'prediction': prediction
+        }
         '''
     Specifically:
     @return The agent he most likely be playing 
     @return A table with the most recent matches 
     @return The prediction value
     @return Average ADS, Average ACS, versing that team 
-    @CAN ONLY RETURN ONE TIME, SO FIGURE OUT HOW TO PUT ALL THE STATISTICS INTO 1 TABLE AND DISPLAY IT IN HTML?
-    
     '''
-        return render_template('results.html', stats=stats, prediction=prediction)
+        return render_template('results.html', stats=stats)
 
 
 
