@@ -7,7 +7,7 @@ Build webscraper that extracts the players statistics from all his recorded matc
 - Methods used: MatchScraper.py, Table Scraper.py, getPlayerName.py, 
 
 # Cleaning, feature engineering, and building the model. IN PROGRESS
-The data frame that was scraped gets sent to be cleaned. This data will be used to create the statistics we want to show on the website. As well as being sent to the model.
+The scraped data frame will be used to create the statistics we want to show. As well as being used to train/test the model
 
 ### Features for model:
 Kills/ACS/ADR vs that team 
