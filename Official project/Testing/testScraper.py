@@ -49,7 +49,7 @@ def match_team(abbreviation, team_names):
 def scrape_data(driver, player_name, url):
     driver.get(url)
     print(f"Accessing URL: {url}")
-    wait = WebDriverWait(driver, 10)
+    wait = WebDriverWait(driver, 0.5)
     player_stats = []
 
     # Extract the team names

@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template
 from MatchScraper import scrape_player_data
-from model_builder import buildModel 
+from model import buildModel 
 import pandas as pd
 
 app = Flask(__name__)
@@ -29,8 +29,8 @@ def submit():
         # Calculate average stats against the opposing team
         avg_acs = specificData['ACS'].mean()
         avg_kills = specificData['Kills'].mean()
-        # TODO: Determine the agent he will most likely play: Do this by looking at what agents he usually plays versus this team?
-        agentPrediction = 
+        # TODO: Determine the agent he will most likely play: Do this by looking at what agents he usually plays versus this team?(Using specificData)
+        agentPrediction = specificData['Agent'].sum()
 
         # Step 3: Prepare data and build model
         prediction = buildModel(scrapedData, agentPrediction)  # This will be defined next

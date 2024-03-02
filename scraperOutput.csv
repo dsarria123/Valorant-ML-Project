@@ -1,4 +1,4 @@
-Agent(Will show the agent played as first columns),Player team,Opposite team,Winning team,Winning team score,Losing team,Losing team score,Map,Player,ACS,Kills,Deaths,Assists,KAST,ADR
+Agent,Player team,Opposite team,Winning team,Winning team score,Losing team,Losing team score,Map,Player,ACS,Kills,Deaths,Assists,KAST,ADR
 Sentinels,100 Thieves,Sentinels,2,100 Thieves,1,1 Lotus,TenZ,207,14,/ 8 /,11,83%,133
 Sentinels,100 Thieves,Sentinels,2,100 Thieves,1,2 Bind,TenZ,240,15,/ 14 /,5,63%,174
 Sentinels,100 Thieves,Sentinels,2,100 Thieves,1,3 Split,TenZ,199,14,/ 14 /,10,71%,134
