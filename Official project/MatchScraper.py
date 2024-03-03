@@ -49,9 +49,9 @@ def scrape_player_data(player_id):
     df = pd.DataFrame(match_map_data)
     
     print(df)
+    df.to_csv("output.csv", index=False)  # Saves the DataFrame to output.csv without the index
     return df
 
-player_id = input("Enter the player ID: ")
-df = scrape_player_data(player_id)
-df.to_csv("output.csv", index=False)  # Saves the DataFrame to output.csv without the index
+
+
 

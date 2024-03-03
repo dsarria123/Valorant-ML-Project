@@ -29,10 +29,9 @@ def submit():
         # Calculate average stats against the opposing team
         avg_acs = specificData['ACS'].mean()
         avg_kills = specificData['Kills'].mean()
-        # TODO: Determine the agent he will most likely play: Do this by looking at what agents he usually plays versus this team?(Using specificData)
-        agentPrediction = specificData['Agent'].sum()
 
         # Step 3: Prepare data and build model
+        #
         prediction = buildModel(scrapedData, agentPrediction)  # This will be defined next
 
         # Step 4: Prepare stats for display
