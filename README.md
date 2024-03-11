@@ -6,13 +6,9 @@ The goal will be to create a little program or website where you plug in the pla
 Build webscraper that extracts the players statistics from all his recorded matches on vlr.gg.
 - Methods used: MatchScraper.py, Table Scraper.py, getPlayerName.py, 
 
-# Cleaning, feature engineering, and building the model. IN PROGRESS
-The scraped data frame will be used to create the statistics we want to show. As well as being used to train/test the model
+# Cleaning, feature engineering, and building the model. DONE
+Done for what I think I can do with this data, maybe will continue in the future.
 
-### Features for model:
-Kills/ACS/ADR vs that team 
-Kills/ACS/ADR on the agent he will most likely play
-Kills/ACS/ADR from the most recent games (Exponential smoothing) Use smoothed kills 
 
 # Front end
 
