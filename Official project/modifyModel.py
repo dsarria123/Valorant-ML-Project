@@ -18,7 +18,7 @@ def exponential_smoothing(series, alpha=0.3):
     for n in range(1, len(series)):
         result.append(alpha * series[n] + (1 - alpha) * result[n-1])
     return result
-
+    
 def buildModel(data, agent, opposing_team):
     """
     Build and evaluate a regression model using the specified features.
