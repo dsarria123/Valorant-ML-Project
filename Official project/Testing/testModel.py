@@ -19,14 +19,6 @@ def exponential_smoothing(series, alpha=0.3):
     return result
 
 def buildModel(data, agent, opposing_team):
-    """
-    Build and evaluate a regression model using the specified features.
-    
-    Parameters:
-    - data: DataFrame containing player performance data.
-    - agent: The agent predicted to be most likely played.
-    - opposing_team: Name of the opposing team to weight kills against.
-    """
     
     # Ensure KST is in a proper numerical format
     data['KAST'] = data['KAST'].replace('', np.nan).str.rstrip('%').astype(float) / 100
