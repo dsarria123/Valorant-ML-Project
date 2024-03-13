@@ -24,8 +24,10 @@
     <h2>Recent Matches</h2>
     <table>
         <tr>
-            <th>Date</th>
-            <th>Match ID</th>
+            <th>Team</th>
+            <th>Score</th>
+            <th>Opponent</th>
+            <th>Score</th>
             <th>Agent</th>
             <th>Kills</th>
             <th>Deaths</th>
@@ -33,8 +35,10 @@
         </tr>
         {% for match in stats['recent_matches'] %}
         <tr>
-            <td>{{ match['Date'] }}</td>
-            <td>{{ match['Match ID'] }}</td>
+            <td>{{ match['Player team'] }}</td>
+            <td>{{ match['Winning team score'] if match['Winning team'] == match['Player team'] else match['Losing team score'] }}</td>
+            <td>{{ match['Opposite team'] }}</td>
+            <td>{{ match['Losing team score'] if match['Winning team'] == match['Player team'] else match['Winning team score'] }}</td>
             <td>{{ match['Agent'] }}</td>
             <td>{{ match['Kills'] }}</td>
             <td>{{ match['Deaths'] }}</td>
