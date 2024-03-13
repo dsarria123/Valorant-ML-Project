@@ -2,14 +2,24 @@
 Building a linear regression model using Python scikit-learn(tensor flow for the new model) to predict player kills in Valorant matches.
 The goal will be to create a little program or website where you plug in the players name, and team they are versing. This will then be plugged into a webscraper to gather all data possible from vlr.gg which has every single pro match from every single pro player. This data will be used to make a more accurate prediction. I will be building the model using tensor flow.
 
-# Web Scraping DONE
-Build webscraper that extracts the players statistics from all his recorded matches on vlr.gg.
-- Methods used: MatchScraper.py, Table Scraper.py, getPlayerName.py, 
+# Web Scraping 
+Built webscraper that extracts the players statistics from all their recorded matches on vlr.gg.
+- Methods used: MatchScraper.py, Table Scraper.py, getPlayerName.py
 
-# Cleaning, feature engineering, and building the model. DONE
-Done for what I think I can do with this data, maybe will continue in the future.
-
+# Model
+Linear Regression model designed to predict player performance, specifically the number of kills, in a game scenario using a variety of features derived from game data. I've implemented an exponential smoothing function to create a "Smoothed Kills" feature, highlighting the importance of recent performance trends. Additionally, the model considers "Weighted Kills Against Opposing Team" to account for a player's performance specifically against the opposing team, and an "Agent Performance Weight" feature that reflects the average performance with a selected agent. The numeric features used in the model are 'ACS', 'Smoothed Kills', 'Weighted Kills Against Opposing Team', 'Agent Performance Weight', and 'KAST'. These features are then scaled and imputed where necessary through a pipeline within a ColumnTransformer. The model is trained on 80% of the processed dataset and evaluated on the remaining 20%, with the Mean Squared Error (MSE) and R² score as performance metrics.
+- Methods used: model.py
 
 # Front end
+Developed a Flask web application that interfaces with the predictive model. The application allows users to input a player's ID and the name of the opposing team. Upon submission, the application dynamically renders predictions and statistical insights, including the predicted kills for the next match, Mean Squared Error (MSE), R² score, most likely agent to be used, and average statistics against the opposing team.
+- Methods/file used: app.py, input.html, output.html
 
 
+
+
+
+
+
+<img width="687" alt="Screen Shot 2024-03-12 at 11 50 50 PM" src="https://github.com/dsarria123/Valorant-ML-Project/assets/107361281/91302609-0a68-407e-bb7f-0a70865f3e96">
+
+<img width="1043" alt="Screen Shot 2024-03-12 at 11 52 08 PM" src="https://github.com/dsarria123/Valorant-ML-Project/assets/107361281/f213c527-0a07-449d-a7c5-102936749f55">
