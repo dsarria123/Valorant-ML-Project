@@ -19,6 +19,11 @@ def submit():
         return "Not a valid ID. Player ID must be a number."
     scrapedData = scrape_player_data(player_id)
     specificData = scrapedData[scrapedData['Opposite team'] == opposing_team]
+    
+     # Ensure the data is numeric
+    specificData['ACS'] = pd.to_numeric(specificData['ACS'], errors='coerce')
+    specificData['Kills'] = pd.to_numeric(specificData['Kills'], errors='coerce')
+
     agentPrediction = specificData['Agent'].mode()[0] if not specificData.empty else 'DefaultAgent'
     predictions, mse, r2 = buildModel(scrapedData, agentPrediction, opposing_team)
     sample_prediction = predictions[0] if len(predictions) > 0 else None
