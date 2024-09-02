@@ -1,11 +1,11 @@
 ### Run app.py and follow the link to use the application.
 
 # Web Scraping 
-Developed a sophisticated web scraper using Selenium and ChromeDriver to gather detailed player statistics from vlr.gg, focusing on competitive match performances. This tool efficiently navigates through player profiles and match details, extracting key data points such as kills, deaths, ACS, KAST, and ADR, as well as agent choices across multiple maps. The scraper's resilience against asynchronous loading and web structure changes ensures reliability and accuracy. Data is aggregated into a DataFrame and saved as a CSV file, offering a foundational dataset for predictive analytics in player performance, showcasing my ability to implement advanced web scraping techniques and data handling for actionable insights in competitive gaming analysis.
+Developed a  web scraper using Selenium and ChromeDriver to gather detailed player statistics from vlr.gg, focusing on competitive match performances. This tool efficiently navigates through player profiles and match details, extracting key data points such as kills, deaths, ACS, KAST, and ADR, as well as agent choices across multiple maps. Data is aggregated into a DataFrame and saved as a CSV file, offering a foundational dataset for predictive analytics in player performance.
 - Methods used: MatchScraper.py, Table Scraper.py, getPlayerName.py
 
 # Model
-Linear Regression model designed to predict player performance, specifically the number of kills, in a game scenario using a variety of features derived from game data. I've implemented an exponential smoothing function to create a "Smoothed Kills" feature, highlighting the importance of recent performance trends. Additionally, the model considers "Weighted Kills Against Opposing Team" to account for a player's performance specifically against the opposing team, and an "Agent Performance Weight" feature that reflects the average performance with a selected agent. The numeric features used in the model are 'ACS', 'Smoothed Kills', 'Weighted Kills Against Opposing Team', 'Agent Performance Weight', and 'KAST'. These features are then scaled and imputed where necessary through a pipeline within a ColumnTransformer. The model is trained on 80% of the processed dataset and evaluated on the remaining 20%, with the Mean Squared Error (MSE) and R² score as performance metrics.
+Changing to implement AWS SageMaker
 - Methods used: model.py
 
 # Front end
