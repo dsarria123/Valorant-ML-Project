@@ -1,5 +1,5 @@
 from sklearn.linear_model import LinearRegression
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.impute import SimpleImputer
@@ -7,14 +7,12 @@ from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 import pandas as pd
 import numpy as np
-from sklearn.ensemble import RandomForestRegressor  # Import Random Forest Regressor
+from sklearn.ensemble import RandomForestRegressor
 
 # Load data directly from the CSV file
-data = pd.read_csv('newOutput.csv')  # Make sure to update this path
+data = pd.read_csv('newOutput.csv')  # Updated path to loaded data file
 
-opposing_team = 'LOUD'  # Example opposing team\
-
-agentPrediction = 'omen'
+opposing_team = 'LOUD'  # Example opposing team
 
 def exponential_smoothing(series, alpha=0.3):
     """Apply exponential smoothing to a series of values."""
@@ -23,7 +21,7 @@ def exponential_smoothing(series, alpha=0.3):
         result.append(alpha * series[n] + (1 - alpha) * result[n - 1])
     return result
 
-def preprocess_data(data, agent, opposing_team):
+def preprocess_data(data, opposing_team):
     """Preprocess the data for modeling."""
     # Extract the middle value between slashes in 'Deaths' and convert to numeric
     data['Deaths'] = data['Deaths'].apply(lambda x: int(x.split('/')[1]) if isinstance(x, str) and '/' in x else x)
@@ -43,42 +41,33 @@ def preprocess_data(data, agent, opposing_team):
         lambda row: row['Kills'] * 1.5 if row['Opposite team'] == opposing_team else row['Kills'], axis=1
     )
 
-    # Filter data for performances with the specified agent
-    agent_data = data[data['Agent'] == agent]
+    # Normalize KAST
+    data['Normalized KAST'] = (data['KAST'] - data['KAST'].mean()) / data['KAST'].std()
 
-    # Calculate average kills with the agent for weighting
-    average_kills_with_agent = agent_data['Kills'].mean()
-    data['Agent Performance Weight'] = average_kills_with_agent
+    # ACS per Death
+    data['ACS per Death'] = data['ACS'] / (data['Deaths'].replace(0, 1))  # Avoid division by zero
 
-     # Filter data for performances with the specified agent
-    agent_data = data[data['Agent'] == agent]
-    average_kills_with_agent = agent_data['Kills'].mean()
-    data['Agent Performance Weight'] = average_kills_with_agent
+    # Kill-to-Death Ratio (KDR)
+    data['KDR'] = data['Kills'] / (data['Deaths'].replace(0, 1))  # Avoid division by zero
 
-    # Calculate historical kills per map
-    map_kills_avg = data.groupby('Map')['Kills'].mean().reset_index()
-    map_kills_avg.columns = ['Map', 'Historical Kills per Map']
+    # Impact Score
+    data['Impact Score'] = (data['Kills'] * 0.4) + (data['ACS'] * 0.3) + (data['KAST'] * 0.3)
 
-    # Merge historical kills per map back into the original data
-    data = data.merge(map_kills_avg, on='Map', how='left')
+    # KAD Ratio
+    data['KAD Ratio'] = (data['Kills'] + data['Assists']) / (data['Deaths'].replace(0, 1))  # Avoid division by zero
 
-    # Calculate historical kills per agent
-    agent_kills_avg = data.groupby('Agent')['Kills'].mean().reset_index()
-    agent_kills_avg.columns = ['Agent', 'Historical Kills per Agent']
 
-    # Merge historical kills per agent back into the original data
-    data = data.merge(agent_kills_avg, on='Agent', how='left')
     return data
 
-
-def build_random_forest_model(data, agentPrediction, opposingTeam):
-    """Build and evaluate the Random Forest model."""
+def build_optimized_random_forest_model(data, opposing_team):
+    """Build and evaluate the optimized Random Forest model."""
+    
     # Preprocess the data
-    data = preprocess_data(data, agentPrediction, opposingTeam)
+    data = preprocess_data(data, opposing_team)
 
     # Define features and target variable
-    numeric_features = ['ACS', 'Smoothed Kills', 'Weighted Kills Against Opposing Team',
-                        'Historical Kills per Map', 'Historical Kills per Agent']  # Added new features
+    numeric_features = ['Smoothed Kills', 'Weighted Kills Against Opposing Team', 'Normalized KAST', 
+                        'ACS per Death', 'KDR', 'Impact Score', 'KAD Ratio']
 
     X = data[numeric_features]
     y = data['Kills']
@@ -100,31 +89,47 @@ def build_random_forest_model(data, agentPrediction, opposingTeam):
     X_train, X_test, y_train, y_test = train_test_split(X_processed, y, test_size=0.2, random_state=42)
 
     # Initialize the Random Forest Regressor
-    rf_model = RandomForestRegressor(n_estimators=1000, max_depth=10, random_state=42)
+    rf_model = RandomForestRegressor(random_state=42)
 
-    # Train the model
-    rf_model.fit(X_train, y_train)
+    # Define the parameter grid for GridSearchCV
+    param_grid = {
+        'n_estimators': [100, 200, 300],
+        'max_depth': [None, 10, 20, 30],
+        'min_samples_split': [2, 5, 10],
+        'min_samples_leaf': [1, 2, 4],
+        'max_features': ['auto', 'sqrt', 'log2']
+    }
 
-    # Make predictions
-    predictions = rf_model.predict(X_test)
+    # Initialize GridSearchCV with 5-fold cross-validation
+    grid_search = GridSearchCV(estimator=rf_model, param_grid=param_grid, cv=5, n_jobs=-1, scoring='r2')
+
+    # Fit the GridSearchCV
+    grid_search.fit(X_train, y_train)
+
+    # Get the best estimator
+    best_rf_model = grid_search.best_estimator_
+
+    # Make predictions with the best model
+    predictions = best_rf_model.predict(X_test)
 
     # Evaluate the model
     mse = mean_squared_error(y_test, predictions)
     r2 = r2_score(y_test, predictions)
 
     # Get feature importances
-    feature_importances = pd.Series(rf_model.feature_importances_, index=numeric_features)
+    feature_importances = pd.Series(best_rf_model.feature_importances_, index=numeric_features)
 
-    return predictions, mse, r2, feature_importances
+    return predictions, mse, r2, feature_importances, grid_search.best_params_
 
-# Build the Random Forest model with updated features
-predictions, mse, r2, feature_importances = build_random_forest_model(data, agentPrediction, opposing_team)
+# Build the optimized Random Forest model with additional features
+predictions, mse, r2, feature_importances, best_params = build_optimized_random_forest_model(data, opposing_team)
 
+# Calculate the average predicted kills
 avg_kills = np.mean(predictions)
+
 # Print out updated analysis information
-print(f"Predicted Kills (First Test Sample): {avg_kills}")
+print(f"Average Predicted Kills: {avg_kills}")
 print(f"Mean Squared Error: {mse}")
 print(f"R^2 Score: {r2}")
 print("Feature Importances:\n", feature_importances)
-print(avg_kills)
-
+print("Best Hyperparameters:\n", best_params)
