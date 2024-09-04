@@ -15,6 +15,15 @@ def scrape_data(driver, player_name, url):
     wait = WebDriverWait(driver, 1)
     player_stats = []
 
+    # Extract the match date
+    try:
+        date_element = driver.find_element(By.CLASS_NAME, 'moment-tz-convert')
+        match_date = date_element.get_attribute('data-utc-ts')
+        print(f"Match date extracted: {match_date}")
+    except NoSuchElementException:
+        print("Match date not found.")
+        match_date = None
+    
     # Extract the team names
     team_names_elements = driver.find_elements(By.CLASS_NAME, 'wf-title-med')
     if len(team_names_elements) >= 2:
@@ -83,7 +92,8 @@ def scrape_data(driver, player_name, url):
                 'Losing team': losing_team,
                 'Losing team score': second_team_score if first_team_score > second_team_score else first_team_score,
                 'Map': map_name, 
-                'Player': player_name  
+                'Player': player_name,
+                'Date': match_date 
                 }
      
 

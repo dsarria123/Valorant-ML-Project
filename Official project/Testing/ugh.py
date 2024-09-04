@@ -17,7 +17,6 @@ def exponential_smoothing(series, alpha=0.3):
 
 def preprocess_data(data, agentPrediction, opposing_team):
 
-
     # Cleaning 'Deaths' column to remove '/' and spaces, then converting to float
     data['Deaths'] = data['Deaths'].str.extract('(\d+)').astype(float)
 

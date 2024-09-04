@@ -1,6 +1,10 @@
 from flask import Flask, request, render_template
 from MatchScraper import scrape_player_data
 from model import buildModel
+from s3_bucket_methods import save_player_data_to_s3
+from s3_buckets_methods import load_player_data_from_s3
+from s3_buckets_methods import scrape_or_load_player_data
+import numpy as np
 import pandas as pd
 
 app = Flask(__name__)
@@ -17,16 +21,14 @@ def submit():
     opposing_team = request.form['opposing_team']
     if not player_id.isdigit():
         return "Not a valid ID. Player ID must be a number."
-    scrapedData = scrape_player_data(player_id)
-    specificData = scrapedData[scrapedData['Opposite team'] == opposing_team]
-    
-     # Ensure the data is numeric
-    specificData['ACS'] = pd.to_numeric(specificData['ACS'], errors='coerce')
-    specificData['Kills'] = pd.to_numeric(specificData['Kills'], errors='coerce')
+    #Eventually check if its even a player id and throw a message
 
+    #Check if data needs to be fully scraped or partially scraped. Happens in there and returns new/used data.
+    data = scrape_or_load_player_data(player_id, opposing_team)
+    predictions, mse, r2 = buildModel(data)
+    specificData = data[data['Opposite team'] == opposing_team]
     agentPrediction = specificData['Agent'].mode()[0] if not specificData.empty else 'DefaultAgent'
-    predictions, mse, r2 = buildModel(scrapedData, agentPrediction, opposing_team)
-    sample_prediction = predictions[0] if len(predictions) > 0 else None
+    sample_prediction = np.mean(predictions)
     stats = {
         'agentPrediction': agentPrediction,
         'recent_matches': specificData.tail(9).to_dict('records'),
