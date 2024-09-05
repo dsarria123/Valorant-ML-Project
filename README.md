@@ -1,6 +1,6 @@
 ### Run app.py and follow the link to use the application.
 
-# Web Scraping and Data Management
+# Python Web Scraping and AWS Data Management
 Developed a  web scraper using Selenium and ChromeDriver to gather detailed player statistics from vlr.gg, focusing on competitive match performances. This tool efficiently navigates through player profiles and match details, extracting key data points such as kills, deaths, ACS, KAST, and ADR, as well as agent choices across multiple maps. Data is aggregated into a DataFrame and saved as a CSV file, offering a foundational dataset for predictive analytics in player performance.
 - Files Methods used: MatchScraper.py, Table Scraper.py, getPlayerName.py
 
