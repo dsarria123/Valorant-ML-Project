@@ -2,10 +2,10 @@
 
 # Web Scraping and Data Management
 Developed a  web scraper using Selenium and ChromeDriver to gather detailed player statistics from vlr.gg, focusing on competitive match performances. This tool efficiently navigates through player profiles and match details, extracting key data points such as kills, deaths, ACS, KAST, and ADR, as well as agent choices across multiple maps. Data is aggregated into a DataFrame and saved as a CSV file, offering a foundational dataset for predictive analytics in player performance.
-- Methods used: MatchScraper.py, Table Scraper.py, getPlayerName.py
+- Files Methods used: MatchScraper.py, Table Scraper.py, getPlayerName.py
 
 The data pipeline now includes saving and loading player data directly to and from AWS S3 buckets. Allows for persistent data storage and ensuring the model is always trained on the latest data. When new matches are detected, the scraper only fetches the new data, appends it to the existing dataset, and saves it back to S3, optimizing both time and resources.
-- Methods used: scrape_or_load_player_data.py
+- Files and Methods used: scrape_or_load_player_data.py
 # Model
 
 Changing to implement AWS SageMaker
