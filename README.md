@@ -30,5 +30,4 @@ Developed a Flask web application that interfaces with the predictive model. The
 - Methods/file used: app.py, input.html, output.html
 
 
-<img width="687" alt="Screen Shot 2024-03-12 at 11 50 50 PM" src="https://github.com/dsarria123/Valorant-ML-Project/assets/107361281/91302609-0a68-407e-bb7f-0a70865f3e96">
-<img width="1043" alt="Screen Shot 2024-03-12 at 11 52 08 PM" src="https://github.com/dsarria123/Valorant-ML-Project/assets/107361281/f213c527-0a07-449d-a7c5-102936749f55">
+![Screenshot 2024-09-05 202655](https://github.com/user-attachments/assets/17b70e50-5c79-4403-9a36-c7e1b3afed53)
