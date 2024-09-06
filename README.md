@@ -9,14 +9,20 @@ The data pipeline now includes saving and loading player data directly to and fr
 - 
 #  Preprocessing
 Extracting numeric values from columns like Kills, Deaths, and Assists. 
+
 Handling missing data using imputation techniques. 
+
 Normalizing values and creating custom features such as weighted kills against a specific opposing team, ACS per Death, and KAST normalization.
+
 Applying exponential smoothing on kills to stabilize trends in the data over time.
+
 -Files and Methods used: preprocessData.py
 
 # Model Building
 Features used: Smoothed Kills, Weighted Kills Against Opposing Team, Normalized KAST, ACS per Death, KDR, Impact Score, KAD Ratio.
+
 Model: Random Forest Regressor, with fine-tuned hyperparameters such as the number of estimators, max depth, and max features.
+
 Evaluation: The model is evaluated using Mean Squared Error (MSE) and R² scores.
 
 # Front end
