@@ -31,3 +31,8 @@ Developed a Flask web application that interfaces with the predictive model. The
 
 
 ![Screenshot 2024-09-05 202655](https://github.com/user-attachments/assets/17b70e50-5c79-4403-9a36-c7e1b3afed53)
+
+# Changes to make
+Implement docker, push image to docker hub so people can just pull and run my image.
+Comparison for new scrape data to top row csv in s3 bucket, keep scraping until it reaches top row then stop.(For scrape_new_data method)
+
