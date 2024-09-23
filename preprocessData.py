@@ -9,8 +9,6 @@ def exponential_smoothing(series, alpha=0.3):
 def preprocess_data(data, opposing_team):
     """Preprocess the data for modeling."""
 
-    #Date time
-    data['Date'] = pd.to_datetime(data['Date'])
     # Extract numeric values from 'Deaths' using regex to handle cases like '/ 10 /'
     data['Deaths'] = data['Deaths'].str.extract(r'/\s*(\d+)\s*/').astype(float).fillna(1)  # Fill with 1 to avoid division by zero
     # Ensure all necessary columns are numeric, handling errors by coercing them to NaN

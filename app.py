@@ -1,9 +1,7 @@
 from flask import Flask, request, render_template
 from MatchScraper import scrape_player_data
 from model import buildModel
-from s3_bucket_methods import save_player_data_to_s3
-from s3_buckets_methods import load_player_data_from_s3
-from s3_buckets_methods import scrape_or_load_player_data
+from scrape_or_load import scrape_or_load_player_data
 import numpy as np
 import pandas as pd
 
