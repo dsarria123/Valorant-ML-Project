@@ -3,8 +3,8 @@ import pandas as pd
 from io import StringIO
 
 # I KNOW THIS ISNT SAFE BUT I GOT NOTHING ELSE ON THIS AWS ACCOUNT IDC
-AWS_ACCESS_KEY_ID = 'your_access_key'
-AWS_SECRET_ACCESS_KEY = 'your_secret_key'
+AWS_ACCESS_KEY_ID = 'AKIASIVGK37HET6DKRYD'
+AWS_SECRET_ACCESS_KEY = 'q9WQO3hD8s6Rijyb4it1AwQxruqiee3Yropv2EPi'
 AWS_DEFAULT_REGION = 'us-east-1'  
 
 # Function to save a player's data to a CSV in the S3 bucket
@@ -20,7 +20,7 @@ def save_player_data_to_s3(player_id, df):
     csv_buffer = StringIO()
     df.to_csv(csv_buffer, index=False)
     file_name = f'player_data_{player_id}.csv'
-    s3_client.put_object(Bucket='your-bucket-name', Key=file_name, Body=csv_buffer.getvalue())
+    s3_client.put_object(Bucket='valggscrapeddata', Key=file_name, Body=csv_buffer.getvalue())
 
 # Function to load a player's data from their S3 bucket CSV
 def load_player_data_from_s3(player_id):
@@ -34,7 +34,7 @@ def load_player_data_from_s3(player_id):
 
     file_name = f'player_data_{player_id}.csv'
     try:
-        obj = s3_client.get_object(Bucket='your-bucket-name', Key=file_name)
+        obj = s3_client.get_object(Bucket='valggscrapeddata', Key=file_name)
         df = pd.read_csv(obj['Body'])
         return df
     except s3_client.exceptions.NoSuchKey:

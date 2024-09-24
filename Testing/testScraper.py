@@ -15,6 +15,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import pandas as pd
 import time
+from preprocessData import preprocess_data
 
 def match_team(abbreviation, team_names):
     abbreviation = abbreviation.lower().replace(' ', '')
@@ -173,21 +174,23 @@ urls = [
     'https://www.vlr.gg/294973/team-ludwig-vs-team-tarik-ludwig-x-tarik-invitational-2-match',
     'https://www.vlr.gg/25200/xset-vs-sentinels-champions-tour-north-america-stage-3-challengers-1-gf',
     'https://www.vlr.gg/286660/sentinels-vs-paper-rex-afreecatv-valorant-league-gf/?game=149811&tab=overview',
-    'https://www.vlr.gg/7719/cloud9-blue-vs-t1-cloud9-to-the-skyes-invitational-quarterfinals',
     'https://www.vlr.gg/6432/spacestation-gaming-vs-cloud9-blue-first-strike-north-america-umg-closed-qual-decider-a'
 ]
 
 # Define the player name you're looking for
 player_name = 'TenZ'
 
+opposing_team = 'LOUD'
+
 # Initialize an empty DataFrame to hold all results
 all_results_df = pd.DataFrame()
 
 # Loop over the URLs and scrape data from each
 for url in urls:
-    results = scrape_data(driver, player_name, url)
-    temp_df = pd.DataFrame(results)
-    all_results_df = pd.concat([all_results_df, temp_df], ignore_index=True)
+    results = pd.DataFrame(scrape_data(driver, player_name, url))
+    hey = preprocess_data(results, opposing_team)
+    all_results_df = pd.concat([all_results_df, hey], ignore_index=True)
+
 
 # Print and/or save the combined results
 print(all_results_df)

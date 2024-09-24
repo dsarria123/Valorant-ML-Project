@@ -37,25 +37,22 @@ def scrape_player_data(player_id, opposing_team, existingfirstrow):
             # Collect all the match links on the current page
             match_links = wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'a.wf-card.fc-flex.m-item')))
             match_urls = [link.get_attribute('href') for link in match_links]
+        
+    #STEP 2 GOES THROUGH EVERY MATCH LINK, IF ITS A BO1, MOVE TO NEXT LINK, IF NOT, SEND THE DRIVER URL AND PLAYER NAME TO "TableScraper.py"
+            for match_url in match_urls:
+
+           
+
+                matchData = scrape_data(driver, player_name, match_url)
+
+        
+            
+                match_map_data.extend(matchData)
+
+            
         except TimeoutException:
             print(f"Page {page_number} took too long to load or no matches found. Ending the search.")
             break
-    #STEP 2 GOES THROUGH EVERY MATCH LINK, IF ITS A BO1, MOVE TO NEXT LINK, IF NOT, SEND THE DRIVER URL AND PLAYER NAME TO "TableScraper.py"
-        for match_url in match_urls:
-            matchData = scrape_data(driver, player_name, match_url)
-            preprocessedData = preprocess_data(matchData,opposing_team)
-
-            if preprocessedData == existingfirstrow:
-                 driver.quit()
-                 df = pd.DataFrame(match_map_data)
-    
-                 df.to_csv("output.csv", index=False)  # Saves the DataFrame to output.csv without the index
-                 return df
-            
-            match_map_data.extend(preprocessedData)
-
-            
-        
 
         page_number += 1  # Increment page number to proceed to the next page of matches
 

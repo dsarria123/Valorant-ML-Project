@@ -47,6 +47,7 @@ def scrape_or_load_player_data(player_id, opposing_team):
         # No data exists, scrape all data for the player
         scraped_data = scrape_player_data(player_id, opposing_team, None)
         
+        processed_data = preprocess_data(scraped_data, opposing_team)
         # Save the new data to S3
         save_player_data_to_s3(player_id, scraped_data)
         return scraped_data
