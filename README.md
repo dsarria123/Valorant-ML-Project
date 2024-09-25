@@ -1,8 +1,8 @@
 ### Run with docker:
 
-docker pull dsarria123/my-app:latest
+1. docker pull dsarria123/my-app:latest
 
-docker run -p 5000:5000 \
+2. docker run -p 5000:5000 \
 -e AWS_ACCESS_KEY_ID=(Will give this upon request) \
 -e AWS_SECRET_ACCESS_KEY=(Will give this upon request) \
 -e AWS_DEFAULT_REGION=us-east-1 \
