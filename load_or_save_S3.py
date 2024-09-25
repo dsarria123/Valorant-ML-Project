@@ -2,10 +2,7 @@ import boto3
 import pandas as pd
 from io import StringIO
 
-# I KNOW THIS ISNT SAFE BUT I GOT NOTHING ELSE ON THIS AWS ACCOUNT IDC
-AWS_ACCESS_KEY_ID = 'AKIASIVGK37HET6DKRYD'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_DEFAULT_REGION = 'us-east-1'  
+
 
 # Function to save a player's data to a CSV in the S3 bucket
 def save_player_data_to_s3(player_id, df):
