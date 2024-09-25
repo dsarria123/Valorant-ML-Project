@@ -1,10 +1,12 @@
 ### Run with docker:
 
+Have to give access keys upon request, AWS gets very angry. Email dsarria@ncsu.edu
+
 1. docker pull dsarria123/my-app:latest
 
 2. docker run -p 5000:5000 \
--e AWS_ACCESS_KEY_ID=(Will give this upon request) \
--e AWS_SECRET_ACCESS_KEY=(Will give this upon request) \
+-e AWS_ACCESS_KEY_ID=() \
+-e AWS_SECRET_ACCESS_KEY=() \
 -e AWS_DEFAULT_REGION=us-east-1 \
 your-dockerhub-dsarria123/my-app:latest
 
