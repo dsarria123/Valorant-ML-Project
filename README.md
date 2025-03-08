@@ -1,16 +1,3 @@
-### Run with docker:
-
-Have to give access keys upon request, AWS gets very angry. Email dsarria@ncsu.edu
-
-1. docker pull dsarria123/my-app:latest
-
-2. docker run -p 5000:5000 \
--e AWS_ACCESS_KEY_ID=() \
--e AWS_SECRET_ACCESS_KEY=() \
--e AWS_DEFAULT_REGION=us-east-1 \
-your-dockerhub-dsarria123/my-app:latest
-
-
 # Python Web Scraping and AWS Data Management
 Developed a  web scraper using Selenium and ChromeDriver to gather detailed player statistics from vlr.gg, focusing on competitive match performances. This tool efficiently navigates through player profiles and match details, extracting key data points such as kills, deaths, ACS, KAST, and ADR, as well as agent choices across multiple maps. Data is aggregated into a DataFrame.
 - Files Methods used: MatchScraper.py, Table Scraper.py, getPlayerName.py
